@@ -1,0 +1,13 @@
+# Ignore hidden folders from IDEs and environments
+.ipynb_checkpoints/
+.vscode/
+
+# Ignore local project storage
+anaconda_projects/
+
+# Ignore compiled python files if they are generated later
+__pycache__/
+*.pyc
+
+# Optional: Ensure git never picks up hidden system trash
+.DS_Store
