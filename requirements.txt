@@ -1,0 +1,10 @@
+# Core inference libraries
+transformers
+torch
+accelerate
+bitsandbytes
+sentencepiece
+
+# Streaming and utility
+pydantic
+tqdm
