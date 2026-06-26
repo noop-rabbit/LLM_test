@@ -1,0 +1,102 @@
+# 1. Install dependencies in Colab cell
+# !pip install bitsandbytes accelerate transformers torch
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TextStreamer, StoppingCriteria, StoppingCriteriaList
+import torch
+import time
+
+model_name = "Qwen/Qwen2.5-7B-Instruct"
+
+# 2. Force 4-bit quantization to shrink model size to ~5.5GB
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16
+)
+
+# 3. Load model completely into GPU VRAM
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    quantization_config=quantization_config,
+    device_map="auto" # This will now map 100% to 'cuda:0'
+)
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+
+class WordStoppingCriterion(StoppingCriteria):
+  def __init__(self, target_word: str, tokenizer):
+    self.target_word = target_word.lower().strip()
+    self.tokenizer = tokenizer
+
+  def __call__(self, input_ids, scores, **kwargs) -> bool:
+    last_text = self.tokenizer.decode(input_ids[0][-2:]).lower()
+    return self.target_word in last_text
+
+target_word = "and"
+target_word_id = tokenizer.encode(target_word, add_special_tokens = False)[0]
+
+stop_criterion = WordStoppingCriterion(target_word, tokenizer)
+stopping_criteria = StoppingCriteriaList([stop_criterion])
+
+
+class TrackStreamer(TextStreamer):
+    def __init__(self, tokenizer):
+        super().__init__(tokenizer)
+        self.start_time = None
+        self.ttft = None
+        self.sec_token_time = None
+        self.is_prompt = True
+        self.is_first_token = True   # Clear flag for token 1
+        self.is_second_token = True
+
+    def put(self, value):
+        if self.is_prompt:
+            self.is_prompt = False
+            self.start_time = time.time()
+
+
+        elif self.is_first_token:
+            self.ttft = time.time() - self.start_time
+            self.sec_time = time.time()
+            print("time:------>>>>", self.ttft)
+
+            self.is_first_token = False
+            self.start_time = time.time()
+
+        elif self.is_second_token:
+            self.sec_token_time = time.time() - self.start_time
+            print("second token time:------>>>>", self.sec_token_time)
+            self.is_second_token = False
+
+
+        super().put(value)
+
+prompt = "Give me a short introduction to large language model."
+
+messages = [
+    {"role": "system", "content": "You are a helpful AI assistant who provides correct information, always"},
+    {"role": "user", "content": prompt}
+]
+text = tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True
+)
+
+model_inputs = tokenizer([text], return_tensors="pt").to(model.device)       #generate token IDs
+
+streamer = TrackStreamer(tokenizer)
+
+streamer.start_time = time.time()
+
+start_time = time.time()
+model.generate(
+    **model_inputs,              #generate embeddings from token --> output response token??
+    max_new_tokens=100,
+    stopping_criteria=stopping_criteria,
+    streamer=streamer,
+)
+
+end_time = time.time()
+print("Total exec time >>>", end_time - start_time )
