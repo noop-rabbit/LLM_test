@@ -1,0 +1,12 @@
+Summary of Benchmark Results (RTX 3060 vs. Tesla T4)								
+								
+Environment / Hardware	Quantization	Prompt Size	Idle VRAM (GB)	Peak Active VRAM (GB)	TTFT / Prefill (s)	Decode / Second Token (s)	Throughput / Speed	Primary System Bottleneck
+Google Colab (Tesla T4)	None (FP16)	Large (5k tokens)	Unstable / High	Maxed (>15 GB)	1.23 (Cold) / 0.42 (Warm)*	56.07	~0.02 tokens/s	Cloud Hard Disk (Virtual Swapping)
+Google Colab (Tesla T4)	4-bit (NF4)	Small (15 tokens)	~4.5	~5.0	1.23 (Cold) / 0.42 (Warm)	0.069	~14.5 tokens/s	None (Fully in VRAM)
+Google Colab (Tesla T4)	4-bit (NF4)	Large (5k tokens)	~4.5	~7.5	8.07	0.12	~8.33 tokens/s	GPU Bandwidth (Older Turing Bus)
+Local PC (RTX 3060)	4-bit (NF4)	Small (15 tokens)	~5.9	~6.4	0.56 (Cold) / 0.53 (Warm)	0.03	~33.3 tokens/s	None (Fully Optimized)
+Local PC (RTX 3060)		Large (5k tokens)	~5.9	~8.5	3.1	0.032	~31.2 tokens/s	None (Fully Optimized)
+Local PC (RTX 3060)	8-bit (INT8)	Small (15 tokens)	8.9	9.4	0.35	0.091	~11.0 tokens/s	Compute / Logic (LLM.int8() Outlier Tax)
+Local PC (RTX 3060)		Large (5k tokens)	8.9	11.5	4.09	0.091	~11.0 tokens/s	Compute Bound / Near VRAM Ceiling
+Local PC (RTX 3060)	None (FP16)	Small (15 tokens)	>12.0 (Spilled)	Maxed (>12 GB)	0.75	0.515	~1.94 tokens/s	PCIe Bus / System RAM (Layer Offload)
+Local PC (RTX 3060)		Large (5k tokens)	>12.0 (Spilled)	Maxed (>12 GB)	5.66	0.51	~1.96 tokens/s	PCIe Bus / System RAM (Layer Offload)
