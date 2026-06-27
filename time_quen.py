@@ -51,10 +51,12 @@ class TrackStreamer(TextStreamer):
     def put(self, value):
         if self.is_prompt:
             self.is_prompt = False
+            torch.cuda.synchronize()
             self.start_time = time.time()
         
 
         elif self.is_first_token:
+            torch.cuda.synchronize()
             self.ttft = time.time() - self.start_time
             self.sec_time = time.time()
             print("time:------>>>>", self.ttft)
@@ -63,6 +65,7 @@ class TrackStreamer(TextStreamer):
             self.start_time = time.time()
 
         elif self.is_second_token:
+            torch.cuda.synchronize()
             self.sec_token_time = time.time() - self.start_time
             print("second token time:------>>>>", self.sec_token_time)
             self.is_second_token = False
@@ -476,14 +479,15 @@ model_inputs = tokenizer([text], return_tensors="pt").to(model.device)       #ge
 
 streamer = TrackStreamer(tokenizer)
 
+torch.cuda.synchronize()
 streamer.start_time = time.time()
-
+torch.cuda.synchronize()
 start_time = time.time()
 model.generate(     
     **model_inputs,              #generate embeddings from token --> output response token??
     max_new_tokens=100,
     streamer=streamer,
 )
-
+torch.cuda.synchronize()
 end_time = time.time()
 print("Total exec time >>>", end_time - start_time )
