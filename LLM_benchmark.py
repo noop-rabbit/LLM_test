@@ -1,82 +1,12 @@
-'''
-from transformers import AutoModelForCausalLM, AutoTokenizer, TextStreamer
-import torch
-import time
-
-model_name = "Qwen/Qwen2.5-7B-Instruct"
-
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    torch_dtype="auto",
-    device_map="auto"
-)
-'''
-
+import threading
+from pynvml import *
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TextStreamer
-import torch
+from transformers.generation.streamers import BaseStreamer
 import time
 
-model_name = "Qwen/Qwen2.5-7B-Instruct"
-
-# 2. Force 4-bit quantization to shrink model size to ~5.5GB
-quantization_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_compute_dtype=torch.float16
-)
-
-# 3. Load model completely into GPU VRAM
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    quantization_config=quantization_config,
-    device_map="auto" # This will now map 100% to 'cuda:0'
-)
-
-#print(model.hf_device_map)
-
-
-
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-class TrackStreamer(TextStreamer):
-    def __init__(self, tokenizer):
-        super().__init__(tokenizer)
-        self.start_time = None
-        self.ttft = None
-        self.sec_token_time = None
-        self.is_prompt = True
-        self.is_first_token = True   # Clear flag for token 1
-        self.is_second_token = True
-
-    def put(self, value):
-        if self.is_prompt:
-            self.is_prompt = False
-            torch.cuda.synchronize()
-            self.start_time = time.time()
-        
-
-        elif self.is_first_token:
-            torch.cuda.synchronize()
-            self.ttft = time.time() - self.start_time
-            self.sec_time = time.time()
-            print("time:------>>>>", self.ttft)
-
-            self.is_first_token = False
-            self.start_time = time.time()
-
-        elif self.is_second_token:
-            torch.cuda.synchronize()
-            self.sec_token_time = time.time() - self.start_time
-            print("second token time:------>>>>", self.sec_token_time)
-            self.is_second_token = False
-
-
-        super().put(value)
-
-prompt = "Give me a short introduction to large language model."
-
-"""
-prompt =  You are an elite Staff Systems Architect and Lead Operations Analyst. You are being handed a massive corpus of unstructured project documentation, system logs, architectural specifications, and meeting transcripts from AeroNexus Robotics. 
+prompts = [
+"""You are an elite Staff Systems Architect and Lead Operations Analyst. You are being handed a massive corpus of unstructured project documentation, system logs, architectural specifications, and meeting transcripts from AeroNexus Robotics. 
 
 Your objective is to ingest this entire context, reconcile conflicting pieces of information, map out dependencies, diagnose system failures, and generate a comprehensive, production-ready System Remediation & Architecture Blueprint.
 
@@ -461,33 +391,945 @@ Provide a modified config.xml structure for Eclipse CycloneDDS that optimizes th
 Detail the exact terminal commands required to configure the Jetson Orin NX power budgets, lock the clocks to maximum performance modes using nvpmodel and jetson_clocks, and manage the Docker container runtime allocations.
 
 Provide a finalized .gitignore template tailored strictly to prevent any machine learning checkpoints (.pth.tar), raw image dumps, or local virtual environments from cluttering the production code tracking workspace.
-    
-"""
+""",
+"""# The Comprehensive AI Capability Evaluation Prompt
 
+You are an advanced reasoning system tasked with producing a response that demonstrates analytical rigor, creativity, structured thinking, ethical reasoning, communication skills, long-context consistency, and self-evaluation. Your objective is not simply to generate text but to demonstrate your ability to think systematically across multiple domains while maintaining coherence, transparency, and intellectual honesty.
 
-messages = [
-    {"role": "system", "content": "You are a helpful AI assistant who provides correct information, always"},
-    {"role": "user", "content": prompt}
+Throughout this task, follow these global rules:
+
+1. Clearly distinguish between facts given in this prompt, assumptions you introduce, logical inferences, and speculative ideas.
+2. When uncertainty exists, explicitly acknowledge it rather than presenting guesses as facts.
+3. Maintain internal consistency across all sections.
+4. Do not contradict previous statements unless you explain why your reasoning has changed.
+5. Use clear headings and organized formatting.
+6. Avoid unnecessary repetition.
+7. Explain your reasoning without revealing hidden internal thought processes.
+8. Whenever appropriate, compare multiple viewpoints before arriving at a conclusion.
+9. Prioritize clarity over complexity.
+10. End every major section with a concise summary.
+
+---
+
+## Scenario
+
+Imagine a fictional nation called **Novara**.
+
+Novara has:
+
+* Population: 48 million
+* Three major cities
+* Large rural agricultural regions
+* A growing technology sector
+* Moderate manufacturing
+* Extensive forests
+* Valuable freshwater resources
+* Significant renewable energy potential
+* Aging transportation infrastructure
+* Declining birth rate
+* Rising life expectancy
+* Moderate immigration
+* High internet penetration
+* Strong universities
+* Increasing political polarization
+
+During the past decade Novara experienced:
+
+* Strong economic growth
+* Rising housing prices
+* Greater wealth inequality
+* Increasing climate-related flooding
+* Growing public debt
+* Declining trust in institutions
+* Advances in artificial intelligence
+* Expansion of remote work
+* Major demographic shifts
+
+No additional facts should be invented unless clearly marked as assumptions.
+
+---
+
+# Part 1 – Situation Assessment
+
+Write a comprehensive overview of Novara.
+
+Include:
+
+* Strengths
+* Weaknesses
+* Opportunities
+* Threats
+
+Conduct both a SWOT analysis and a PESTLE analysis.
+
+For each factor explain:
+
+* why it matters
+* what evidence from the scenario supports it
+* how it interacts with other factors
+
+Conclude with the five issues that deserve the highest priority.
+
+---
+
+# Part 2 – Strategic Planning
+
+Develop a twenty-year national strategy.
+
+Divide the strategy into:
+
+Years 1–5
+
+Years 6–10
+
+Years 11–15
+
+Years 16–20
+
+For every phase include:
+
+Objectives
+
+Major projects
+
+Budget priorities
+
+Expected outcomes
+
+Risks
+
+Success metrics
+
+Fallback plans
+
+Dependencies
+
+Explain why every decision is being made.
+
+---
+
+# Part 3 – Economics
+
+Design an economic strategy.
+
+Address:
+
+Inflation
+
+Employment
+
+Innovation
+
+Manufacturing
+
+Exports
+
+Tax policy
+
+Government spending
+
+Public debt
+
+Small businesses
+
+Large corporations
+
+Automation
+
+AI
+
+Education
+
+Productivity
+
+Competition
+
+Income inequality
+
+Provide short-term and long-term recommendations.
+
+Discuss tradeoffs.
+
+Explain unintended consequences.
+
+---
+
+# Part 4 – Technology
+
+Create a national AI and technology roadmap.
+
+Discuss:
+
+Artificial intelligence
+
+Robotics
+
+Cybersecurity
+
+Quantum computing
+
+Cloud infrastructure
+
+Semiconductors
+
+Digital identity
+
+Privacy
+
+Open-source software
+
+Research funding
+
+Startups
+
+University partnerships
+
+International cooperation
+
+Export controls
+
+Ethical governance
+
+Explain how these technologies interact.
+
+---
+
+# Part 5 – Education
+
+Redesign the national education system.
+
+Cover:
+
+Primary school
+
+Secondary school
+
+Universities
+
+Vocational training
+
+Adult learning
+
+Online education
+
+Teacher development
+
+Scholarships
+
+Research
+
+Critical thinking
+
+Media literacy
+
+AI literacy
+
+Digital skills
+
+Ethics
+
+Explain how the education system prepares citizens for future challenges.
+
+---
+
+# Part 6 – Healthcare
+
+Create a modern healthcare strategy.
+
+Discuss:
+
+Hospitals
+
+Primary care
+
+Mental health
+
+Preventive medicine
+
+Nutrition
+
+Exercise
+
+Pandemic preparedness
+
+Medical research
+
+Health technology
+
+Telemedicine
+
+Healthcare funding
+
+Rural healthcare
+
+Aging population
+
+Workforce shortages
+
+Evaluate both costs and benefits.
+
+---
+
+# Part 7 – Environment
+
+Develop an environmental sustainability plan.
+
+Address:
+
+Climate adaptation
+
+Flood prevention
+
+Renewable energy
+
+Water management
+
+Forests
+
+Wildlife
+
+Agriculture
+
+Carbon emissions
+
+Public transportation
+
+Urban planning
+
+Recycling
+
+Circular economy
+
+Environmental regulation
+
+Economic impacts
+
+Explain tradeoffs.
+
+---
+
+# Part 8 – Infrastructure
+
+Design infrastructure improvements.
+
+Include:
+
+Roads
+
+Rail
+
+Ports
+
+Airports
+
+Electric grid
+
+Broadband
+
+Water systems
+
+Housing
+
+Smart cities
+
+Public transportation
+
+Disaster resilience
+
+Maintenance
+
+Funding
+
+Prioritization
+
+Estimate implementation challenges.
+
+---
+
+# Part 9 – Ethics
+
+Discuss ethical issues involving:
+
+Artificial intelligence
+
+Privacy
+
+Surveillance
+
+Automation
+
+Economic inequality
+
+Freedom of speech
+
+Government transparency
+
+Algorithmic bias
+
+Digital rights
+
+Environmental justice
+
+Future generations
+
+Explain competing viewpoints fairly.
+
+Avoid simplistic conclusions.
+
+---
+
+# Part 10 – Crisis Simulation
+
+Halfway through implementation, Novara experiences:
+
+A Category 5 hurricane.
+
+Major cyberattacks.
+
+Global recession.
+
+Energy shortages.
+
+Supply chain disruption.
+
+Pandemic resurgence.
+
+Political unrest.
+
+Evaluate:
+
+Immediate response
+
+Medium-term recovery
+
+Long-term adaptation
+
+Economic impact
+
+Political consequences
+
+International relations
+
+Public trust
+
+Explain which policies remain valid and which should change.
+
+---
+
+# Part 11 – Stakeholder Analysis
+
+Analyze perspectives of:
+
+Prime Minister
+
+Mayor
+
+Farmer
+
+Factory worker
+
+Software engineer
+
+Teacher
+
+Student
+
+Retiree
+
+Immigrant
+
+Entrepreneur
+
+Climate scientist
+
+Economist
+
+Small business owner
+
+Environmental activist
+
+Each stakeholder should include:
+
+Goals
+
+Concerns
+
+Disagreements
+
+Compromises
+
+Likely reactions
+
+---
+
+# Part 12 – Quantitative Thinking
+
+Without inventing precise unsupported statistics:
+
+Estimate relative impacts.
+
+Rank policy effectiveness.
+
+Compare opportunity costs.
+
+Discuss uncertainty.
+
+Explain confidence levels.
+
+State which estimates are most reliable.
+
+---
+
+# Part 13 – Creativity
+
+Write a short story set twenty years later.
+
+Length: approximately 800 words.
+
+Follow one ordinary citizen through a normal day.
+
+Reveal societal changes naturally.
+
+Avoid exposition dumps.
+
+Focus on everyday details.
+
+---
+
+# Part 14 – Debate
+
+Create a debate between two experts.
+
+Expert A strongly supports the strategy.
+
+Expert B criticizes it.
+
+Each side should present:
+
+Opening statement
+
+Five arguments
+
+Responses
+
+Rebuttals
+
+Closing remarks
+
+Both should appear intelligent and well informed.
+
+---
+
+# Part 15 – Failure Analysis
+
+Identify:
+
+Ten assumptions
+
+Ten possible failures
+
+Ten unintended consequences
+
+Ten implementation risks
+
+Ten monitoring indicators
+
+Explain how each risk could be reduced.
+
+---
+
+# Part 16 – Alternative Futures
+
+Construct four scenarios:
+
+Optimistic
+
+Moderately successful
+
+Stagnation
+
+Major decline
+
+Explain:
+
+Trigger events
+
+Key decisions
+
+External influences
+
+Economic outcomes
+
+Social outcomes
+
+Environmental outcomes
+
+Technological outcomes
+
+Political outcomes
+
+---
+
+# Part 17 – Communication
+
+Explain your overall strategy for:
+
+A child
+
+A high school student
+
+A university graduate
+
+A policymaker
+
+A CEO
+
+An engineer
+
+A journalist
+
+A skeptical taxpayer
+
+Adapt vocabulary appropriately while keeping the core message consistent.
+
+---
+
+# Part 18 – Meta Evaluation
+
+Critically evaluate your own work.
+
+Identify:
+
+Strongest sections
+
+Weakest sections
+
+Potential biases
+
+Missing evidence
+
+Alternative interpretations
+
+Information that would improve confidence
+
+Areas requiring expert review
+
+Distinguish between confidence and certainty.
+
+---
+
+# Part 19 – Executive Outputs
+
+Produce:
+
+1. A 250-word executive summary.
+
+2. A one-page policy brief.
+
+3. A prioritized action checklist.
+
+4. A timeline.
+
+5. A risk matrix.
+
+6. A decision matrix.
+
+7. A SWOT summary table.
+
+8. A PESTLE summary table.
+
+9. A stakeholder summary table.
+
+10. A glossary of important concepts.
+
+---
+
+# Part 20 – Reflection
+
+Write a concluding essay discussing:
+
+Why complex systems rarely have simple solutions.
+
+How uncertainty affects decision making.
+
+Why incentives matter.
+
+How institutions evolve.
+
+The limits of prediction.
+
+The importance of adaptability.
+
+The role of leadership.
+
+The relationship between technology and society.
+
+The balance between innovation and regulation.
+
+The importance of critical thinking.
+
+End with ten timeless principles for solving large-scale problems.
+
+---
+
+## Final Quality Checklist
+
+Before finishing, verify that your response:
+
+* Uses consistent terminology throughout.
+* Clearly labels assumptions.
+* Separates evidence from opinion.
+* Avoids unsupported certainty.
+* Uses readable headings.
+* Maintains internal consistency.
+* Addresses every requested section.
+* Avoids unnecessary repetition.
+* Explains tradeoffs instead of assuming ideal outcomes.
+* Demonstrates balanced reasoning.
+* Includes concise summaries after major sections.
+* Produces outputs that are practical, realistic, and well organized.
+* Reflects on limitations instead of claiming perfection.
+
+The final response should prioritize depth, coherence, accuracy, transparency, and practical usefulness over verbosity. If multiple reasonable interpretations exist, present them fairly before recommending one. Throughout the response, demonstrate careful reasoning, intellectual humility, structured organization, and consistent communication. Ensure that every recommendation can be traced back to earlier analysis, and explicitly identify any dependencies or assumptions that influence your conclusions. Finally, imagine that this document will be reviewed by economists, engineers, policymakers, scientists, educators, business leaders, and the general public simultaneously, and write in a manner that is rigorous enough for experts while remaining understandable to informed non-specialists.
+""",
+
+"""You are an expert multidisciplinary analyst, strategist, researcher, educator, editor, and creative thinker. Your objective is not merely to answer questions but to demonstrate exceptional reasoning, adaptability, and clarity while remaining transparent about uncertainty. Throughout this task, imagine that your audience consists of intelligent readers with varying levels of expertise. Your explanations should therefore be accessible without sacrificing depth or accuracy.
+
+Your primary assignment is to analyze a fictional city named Meridian. Meridian is a coastal metropolitan area with a population of 2.8 million people. The city has experienced rapid economic growth over the last fifteen years due to technology, renewable energy, tourism, and higher education. However, it now faces several interconnected challenges, including housing affordability, traffic congestion, water shortages during dry seasons, income inequality, aging infrastructure, environmental degradation, and declining trust in public institutions.
+
+Begin by identifying the five most significant challenges facing Meridian. Rank them in order of long-term importance, explaining the reasoning behind each ranking. Discuss how these challenges interact with one another instead of treating them as isolated problems.
+
+Next, design a comprehensive ten-year strategic development plan. Divide your plan into short-term, medium-term, and long-term phases. For each phase, define measurable objectives, expected outcomes, potential obstacles, and methods for evaluating progress. Where trade-offs exist, explain why one option should be preferred over another.
+
+Assume that Meridian has a fixed public investment budget that cannot increase through borrowing. Describe how limited financial resources should influence decision-making. Explain which projects deserve priority funding, which should be delayed, and which should be canceled entirely. Justify each recommendation using principles of economics, public policy, ethics, and sustainability.
+
+Now imagine that a major earthquake strikes Meridian halfway through the implementation of the plan. Critical transportation systems are damaged, electricity is disrupted for several weeks, and thousands of residents require temporary housing. Explain how the original strategy should be revised under these new circumstances. Identify which long-term goals should remain unchanged and which should be adjusted. Discuss the balance between emergency response and maintaining progress toward broader strategic objectives.
+
+Switch perspectives and analyze the same situation from the viewpoints of five different stakeholders: a small business owner, a university student, a retired resident, the city's mayor, and an environmental scientist. For each stakeholder, explain their priorities, concerns, likely disagreements with others, and possible areas of compromise.
+
+After completing the policy analysis, demonstrate creativity by writing a short narrative of approximately 300 words describing one ordinary day in Meridian ten years after your proposed plan has been implemented successfully. Focus on small details of everyday life rather than dramatic events. Allow readers to infer the city's transformation through subtle observations rather than direct exposition.
+
+Next, perform a critical self-review of everything you have written. Identify at least five assumptions that influenced your recommendations. Discuss how those assumptions could be incorrect and how different assumptions might lead to different conclusions. Highlight any areas where additional evidence would improve confidence in your recommendations.
+
+Then create a concise executive summary of no more than 250 words that could be presented to busy policymakers. The summary should capture the central findings, priorities, risks, and expected benefits without oversimplifying complex issues.
+
+Following the executive summary, produce a comparison table with the following columns: Challenge, Root Cause, Recommended Action, Estimated Cost, Expected Benefit, Primary Risk, and Success Metric. Populate the table with information that is internally consistent with your earlier analysis.
+
+Now demonstrate teaching ability by explaining the entire strategy twice. First, explain it as though speaking to a curious twelve-year-old using simple language, relatable analogies, and minimal jargon. Second, explain it as though presenting to graduate students specializing in urban planning, using precise terminology and greater technical detail while maintaining clarity.
+
+Afterward, imagine that a skeptical journalist interviews you. Generate ten challenging questions that the journalist might ask about weaknesses, unintended consequences, political feasibility, fairness, environmental impacts, and financial realism. Answer each question thoughtfully, acknowledging uncertainty where appropriate instead of pretending perfect confidence.
+
+Next, identify three alternative futures for Meridian. One should be highly optimistic, one moderately successful, and one pessimistic. Describe the events that lead to each outcome, the warning signs that policymakers should monitor, and the actions that could shift the city from a negative trajectory toward a positive one.
+
+Demonstrate structured reasoning by listing the key principles that guided your recommendations. These principles might include resilience, equity, transparency, efficiency, adaptability, environmental stewardship, evidence-based policymaking, fiscal responsibility, or other relevant concepts. Explain how each principle influenced specific decisions within your strategy.
+
+Throughout your response, prioritize logical consistency. If you introduce a claim, ensure that later recommendations do not contradict it without explanation. If uncertainty exists, state it explicitly. Distinguish clearly between facts provided in this prompt, reasonable inferences, assumptions, and speculative possibilities.
+
+Your writing should balance analytical precision with readability. Use headings, numbered sections, bullet points where appropriate, and concise paragraphs. Avoid unnecessary repetition. When presenting estimates or projections, explain the reasoning instead of inventing unsupported numbers. Whenever multiple valid perspectives exist, compare them fairly before reaching a conclusion.
+
+Finally, conclude with a reflective section discussing what this exercise reveals about the complexity of long-term decision-making in modern cities. Explain why simple solutions rarely solve interconnected problems and describe how effective leaders can make sound decisions despite uncertainty, incomplete information, competing priorities, and changing circumstances. End with three practical lessons that readers could apply to real-world planning, leadership, or problem-solving beyond the fictional city of Meridian.
+""" ,
+"""What do you know about the weather in antarctica"""
+
 ]
-text = tokenizer.apply_chat_template(
-    messages,
-    tokenize=False,
-    add_generation_prompt=True
+
+generation_event = threading.Event()
+gen_time = 0
+
+model_name = "Qwen/Qwen2.5-7B-Instruct"
+
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16
 )
 
-model_inputs = tokenizer([text], return_tensors="pt").to(model.device)       #generate token IDs
-
-streamer = TrackStreamer(tokenizer)
-
-torch.cuda.synchronize()
-streamer.start_time = time.time()
-torch.cuda.synchronize()
-start_time = time.time()
-model.generate(     
-    **model_inputs,              #generate embeddings from token --> output response token??
-    max_new_tokens=100,
-    streamer=streamer,
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    quantization_config=quantization_config,
+    device_map="auto"
 )
-torch.cuda.synchronize()
-end_time = time.time()
-print("Total exec time >>>", end_time - start_time )
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+def fun1(prompt):
+
+
+  global gen_time
+  global start_time
+
+  class TrackStreamer(BaseStreamer):
+    def __init__(self, start_time):
+      super().__init__()
+      self.ttft = None
+      self.sec_token_time = None
+      self.start_time = start_time
+      self.is_prompt = True       # <---- Unused
+      self.is_first_token = True   # Clear flag for token 1
+      self.is_second_token = True
+      self.decode_start_time = None
+      self.token_count = 0
+      self.all_tokens = []
+
+    def put(self, value):
+      if value.ndim > 1 and value.shape[-1] > 1:
+        torch.cuda.synchronize()
+        self.start_time = time.time()
+
+      elif self.is_first_token:
+        torch.cuda.synchronize()
+        self.ttft = time.time() - self.start_time
+        self.decode_start_time = time.time()
+        self.is_first_token = False
+        self.all_tokens.append(value)
+
+      elif self.is_second_token:
+        torch.cuda.synchronize()
+        self.sec_token_time = time.time() - self.decode_start_time
+        # second_t = self.sec_token_time
+        self.is_second_token = False
+        self.token_count += value.numel()
+        self.all_tokens.append(value)
+
+      else:
+        self.token_count += value.numel()
+        self.all_tokens.append(value)
+
+    def end(self):
+      torch.cuda.synchronize()
+      if self.decode_start_time and self.token_count > 0:
+        decode_duration = time.time() - self.decode_start_time
+        tokens_per_second = self.token_count / decode_duration
+        print("TTFT -->", self.ttft)
+        print("second_t -->", self.sec_token_time)
+        print(f"Decode Speed: {tokens_per_second:.2f} tokens/sec")
+        if self.all_tokens:
+          flattened_tokens = torch.cat(self.all_tokens, dim=0)
+          actual_response = tokenizer.decode(flattened_tokens, skip_special_tokens=True)
+
+          print("\n=== Model Response ===")
+          print(actual_response)
+          print("======================\n")
+
+
+  messages = [
+  {"role": "system", "content": "You are a helpful AI assistant who provides correct information, always"},
+  {"role": "user", "content": prompt}
+  ]
+
+  text = tokenizer.apply_chat_template(
+      messages,
+      tokenize=False,
+      add_generation_prompt=True
+  )
+
+  model_inputs = tokenizer([text], return_tensors="pt").to(model.device)       #generate token IDs
+  torch.cuda.synchronize()
+  start_time = time.time()
+  streamer = TrackStreamer(start_time=start_time)
+
+  gen_time = start_time
+
+  model.generate(
+      **model_inputs,              #generate embeddings from token --> output response token??
+      max_new_tokens=100,
+      streamer=streamer,
+  )
+  generation_event.clear()
+  torch.cuda.synchronize()
+  end_time = time.time()
+  print("Total exec time >>>", end_time - start_time )
+
+
+def fun2():
+  global arr1
+  nvmlInit()
+  device_count = nvmlDeviceGetCount()
+
+  while generation_event.is_set():
+    for i in range(device_count):
+      arr_time = time.time()
+      handle = nvmlDeviceGetHandleByIndex(i)
+      name = nvmlDeviceGetName(handle)
+      # driver_ver = nvmlSystemGetDriverVersion()
+
+      memory_info = nvmlDeviceGetMemoryInfo(handle)
+      #total_mem = memory_info.total / (1024**3)  # Convert to GB
+      used_mem = memory_info.used / (1024**3)
+
+      utilization = nvmlDeviceGetUtilizationRates(handle)
+      gpu_util = utilization.gpu
+
+      temp = nvmlDeviceGetTemperature(handle, NVML_TEMPERATURE_GPU)
+      power = nvmlDeviceGetPowerUsage(handle) / 1000.0  # Convert to Watts
+      arr1.append([arr_time, used_mem, gpu_util, temp, power])
+      time.sleep(0.1)
+
+
+  nvmlShutdown()
+
+def warmup(model, tokenizer, n_tokens=20):
+  print("Warming up model...")
+  messages = [{"role": "user", "content": "Hello"}]
+  text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+  inputs = tokenizer([text], return_tensors="pt").to(model.device)
+
+  with torch.no_grad():
+      model.generate(**inputs, max_new_tokens=n_tokens)
+
+  torch.cuda.synchronize()
+  print("Warm-up done.\n")
+
+
+
+def main():
+  global arr1
+  all_results = []
+
+  warmup(model, tokenizer)
+
+  for prompt in prompts:
+    arr1 = []
+    generation_event.set()
+
+    t1 = threading.Thread(target=fun1, args=(prompt,))
+    t2 = threading.Thread(target=fun2)
+
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+
+    if len(arr1) > 0:
+      arr = [row for row in arr1 if row[0] > gen_time]
+      if len(arr) > 0:
+          max_mem = max(row[1] for row in arr)
+          max_gpu = max(row[2] for row in arr)
+          avg_power = sum(row[4] for row in arr) / len(arr)
+
+          # Store the metrics for this prompt
+          all_results.append({
+              "prompt": prompt,
+              "max_mem": max_mem,
+              "max_gpu": max_gpu,
+              "avg_power": avg_power
+          })
+      else:
+        print(f"No GPU samples after gen_time for prompt: {prompt[:30]}")
+    else:
+      print("Data not found!!!")
+
+  # Print comparison report
+  print("\n==================== BENCHMARK COMPARISON REPORT ====================")
+  print(f"{'Prompt Summary':<30} | {'Max Mem (GB)':<12} | {'Max GPU (%)':<11} | {'Avg Power (W)':<13}")
+  print("-" * 75)
+
+  # Truncate prompt string if it's too long for the table column
+
+  for res in all_results:
+    short_prompt = res['prompt'] if len(res['prompt']) < 28 else res['prompt'][:25] + "..."
+    print(f"{short_prompt:<30} | {res['max_mem']:<12.2f} | {res['max_gpu']:<11.1f} | {res['avg_power']:<13.2f}")
+  print("=====================================================================")
+
+
+if __name__ == "__main__":
+  main()
