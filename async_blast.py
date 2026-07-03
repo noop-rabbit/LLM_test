@@ -145,14 +145,7 @@ async def main():
 
     # Blast 10 tasks concurrently
     tasks = [send_request(client, prompt=distinct_prompts[i], client_id=i) for i in range(50)]
-    '''
-    for i in range(10):
-        print(f"\n --- Starting iteration {i}/10 ---")
-
-        await send_request(client, prompt_1, client_id="First prompt", iteration=i)
-        #await send_request(client, prompt_2, client_id="Second prompt", iteration=i)
-
-    '''
+   
     await asyncio.gather(*tasks)
     print(f"\nTotal Concurrent Wall Clock Time: {time.time() - start_total:.3f}s")
 
