@@ -1,0 +1,7 @@
+{
+    "avg_ttft_sec": 1.2074843120574952,
+    "avg_decode_tokens_per_sec": 47.6927953336198,
+    "peak_vram_gb": 9.4993896484375,
+    "max_gpu_compute_percent": 100,
+    "avg_power_watts": 111.44568136272544
+}

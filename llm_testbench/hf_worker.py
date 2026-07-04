@@ -4,6 +4,9 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TextStreamer
 from transformers.generation.streamers import BaseStreamer
 import time
+import json
+
+
 
 prompts = [
 """You are an elite Staff Systems Architect and Lead Operations Analyst. You are being handed a massive corpus of unstructured project documentation, system logs, architectural specifications, and meeting transcripts from AeroNexus Robotics. 
@@ -1135,6 +1138,8 @@ Finally, conclude with a reflective section discussing what this exercise reveal
 
 generation_event = threading.Event()
 gen_time = 0
+arr1 = []
+hf_metrics_history = []
 
 model_name = "Qwen/Qwen2.5-7B-Instruct"
 
@@ -1202,6 +1207,13 @@ def fun1(prompt):
         print("TTFT -->", self.ttft)
         print("second_t -->", self.sec_token_time)
         print(f"Decode Speed: {tokens_per_second:.2f} tokens/sec")
+
+        hf_metrics_history.append({
+            "ttft": self.ttft,
+            "duration": decode_duration,
+            "tokens": self.token_count
+        })
+
         if self.all_tokens:
           flattened_tokens = torch.cat(self.all_tokens, dim=0)
           actual_response = tokenizer.decode(flattened_tokens, skip_special_tokens=True)
@@ -1284,8 +1296,14 @@ def warmup(model, tokenizer, n_tokens=20):
 def main():
   global arr1
   all_results = []
+  global hf_metrics_history
 
   warmup(model, tokenizer)
+
+  total_tokens_generated = 0
+  total_generation_time = 0.0
+  all_ttfts = []
+  hf_metrics_history = []
 
   for prompt in prompts:
     arr1 = []
@@ -1299,22 +1317,28 @@ def main():
     t1.join()
     t2.join()
 
-    if len(arr1) > 0:
-      arr = [row for row in arr1 if row[0] > gen_time]
-      if len(arr) > 0:
-          max_mem = max(row[1] for row in arr)
-          max_gpu = max(row[2] for row in arr)
-          avg_power = sum(row[4] for row in arr) / len(arr)
+    if hf_metrics_history:
+        latest_run = hf_metrics_history[-1]
+        total_tokens_generated += latest_run["tokens"]
+        total_generation_time += latest_run["duration"]
+        all_ttfts.append(latest_run["ttft"])
 
-          # Store the metrics for this prompt
-          all_results.append({
-              "prompt": prompt,
-              "max_mem": max_mem,
-              "max_gpu": max_gpu,
-              "avg_power": avg_power
-          })
-      else:
-        print(f"No GPU samples after gen_time for prompt: {prompt[:30]}")
+    if len(arr1) > 0:
+        arr = [row for row in arr1 if row[0] > gen_time]
+        if len(arr) > 0:
+            max_mem = max(row[1] for row in arr)
+            max_gpu = max(row[2] for row in arr)
+            avg_power = sum(row[4] for row in arr) / len(arr)
+
+            # Store the metrics for this prompt
+            all_results.append({
+                "prompt": prompt,
+                "max_mem": max_mem,
+                "max_gpu": max_gpu,
+                "avg_power": avg_power
+            })
+        else:
+            print(f"No GPU samples after gen_time for prompt: {prompt[:30]}")
     else:
       print("Data not found!!!")
 
@@ -1329,6 +1353,32 @@ def main():
     short_prompt = res['prompt'] if len(res['prompt']) < 28 else res['prompt'][:25] + "..."
     print(f"{short_prompt:<30} | {res['max_mem']:<12.2f} | {res['max_gpu']:<11.1f} | {res['avg_power']:<13.2f}")
   print("=====================================================================")
+
+  if all_results:
+        # Calculate overall maximums/averages across all evaluated test prompts
+        overall_max_mem = max(res['max_mem'] for res in all_results)
+        overall_max_gpu = max(res['max_gpu'] for res in all_results)
+        overall_avg_power = sum(res['avg_power'] for res in all_results) / len(all_results)
+        
+        # Calculate speed performance fallbacks if tracking variables aren't bound
+        tokens_per_second = total_tokens_generated / total_generation_time if total_generation_time > 0 else 0.0
+        avg_ttft = sum(all_ttfts) / len(all_ttfts) if all_ttfts else 0.0
+
+        hf_data = {
+            "backend": "Hugging Face",
+            "total_tokens": total_tokens_generated,
+            "total_duration": total_generation_time,
+            "tokens_per_second": tokens_per_second,
+            "avg_ttft": avg_ttft,
+            "max_mem": overall_max_mem,
+            "max_gpu": overall_max_gpu,
+            "avg_power": overall_avg_power
+        }
+
+        output_filename = "hf_res.json"
+        with open(output_filename, "w") as f:
+            json.dump(hf_data, f, indent=4)
+        print(f"\n[SUCCESS] Saved integrated Hugging Face metrics to {output_filename}")
 
 
 if __name__ == "__main__":

@@ -95,11 +95,49 @@ def nvml_telemetry_monitor():
 
 
 
-def main():
-    pass
+async def main():
+    global gpu_telemetry_records
 
+    generation_event.set()
+    monitor_thread = threading.Thread(target=nvml_telemetry_monitor)
+    monitor_thread.start()
+
+    print(f"Blasting {len(prompts_suite)} cocurrent requests to engine port {PORT}")
+    api_endpoint = f"http://localhost:{PORT}/v1/chat/completions"
+
+    async with aiohttp.ClientSession() as session:
+        tasks = [
+            send_request(session, api_endpoint, MODEL_NAME, prompts_suite[i], client_id=i)
+            for i in range(len(prompts_suite))
+        ]
+        client_metrics = await asyncio.gather(*tasks)
+
+    generation_event.clear()
+    monitor_thread.join()
+    
+    valid_clients = [m for m in client_metrics if m is not None]
+    avg_ttft = sum(c["ttft"] for c in valid_clients)/ len(valid_clients) if valid_clients else 0
+    avg_tps = sum(c["tokens_per_sec"] for c in valid_clients) / len(valid_clients) if valid_clients else 0
+
+    if len(gpu_telemetry_records) > 0:
+        peak_vram = max(row[1] for row in gpu_telemetry_records)
+        max_compute_util = max(row[2] for row in gpu_telemetry_records)
+        avg_power_draw = sum(row[3] for row in gpu_telemetry_records) / len(gpu_telemetry_records)
+    else:
+        peak_vram, max_compute_util, avg_power_draw = 0, 0, 0
+
+    final_report = {
+        "avg_ttft_sec": avg_ttft,
+        "avg_decode_tokens_per_sec": avg_tps,
+        "peak_vram_gb": peak_vram,
+        "max_gpu_compute_percent": max_compute_util,
+        "avg_power_watts": avg_power_draw
+    }
+
+    json.dump(final_report, open(OUTPUT_FILE, "w"), indent=4)
+    print(f"\nBenchmark completed. Summary written to {OUTPUT_FILE}")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
 
 
