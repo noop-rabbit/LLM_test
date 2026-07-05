@@ -1,10 +1,10 @@
 {
     "backend": "Hugging Face",
-    "total_tokens": 396,
-    "total_duration": 10.719513177871704,
-    "tokens_per_second": 36.941976135396054,
-    "avg_ttft": 1.9563741087913513,
-    "max_mem": 8.45819091796875,
-    "max_gpu": 100,
-    "avg_power": 163.33506540862956
+    "total_tokens": 99,
+    "total_duration": 2.575140953063965,
+    "tokens_per_second": 38.44449752632275,
+    "avg_ttft": 0.22711539268493652,
+    "max_mem": 6.80908203125,
+    "max_gpu": 97,
+    "avg_power": 157.2691111111111
 }

@@ -12,7 +12,12 @@ PORT = 8000
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct-AWQ"
 OUTPUT_FILE = "vllm_res.json"
 
-prompts_suite = ["Short prompt"] * 50
+prompts_suite = ["What do you know about the weather in antarctica?"] * 50
+
+# for more than 100 prompts
+# 1. Create a custom connector with no limits
+#connector = aiohttp.TCPConnector(limit=0)
+#async with aiohttp.ClientSession(connector=connector) as session:
 
 async def send_request(session, url, model_name, prompt, client_id):
     payload = {
@@ -30,12 +35,16 @@ async def send_request(session, url, model_name, prompt, client_id):
 
     try:
         async with session.post(url, json=payload) as response:
+            if response.status != 200:
+                print(f"Server Error {response.status}")
+                return {"ttft": None, "tokens_per_sec": 0}
+
             async for line_bytes in response.content:
-                line = line_bytes.decode("utf-8").strip()
-                if not line or not line.startswith("data: "):
+                line = line_bytes.decode("utf-8").strip()               #converts raw bytes to text strings and removes special chars
+                if not line or not line.startswith("data: "):           # if blank bcos data stream starts with "data: " --> 6 chars
                     continue
 
-                data_str = line[6:]
+                data_str = line[6:]                                     #removes initial marker "data: "
                 if data_str == "[DONE]":
                     break
 
@@ -43,15 +52,15 @@ async def send_request(session, url, model_name, prompt, client_id):
                     chunk = json.loads(data_str)
                 except json.JSONDecodeError:
                     continue
-
-                if chunk.get("choices") and len(chunk["choices"]) > 0:
-                    delta = chunk["choices"][0].get("delta", {})
-                    if delta.get("content") and ttft is None:
-                        ttft = time.time() - start_time
-
-                if "usage" in chunk and chunk["usage"] is not None:
-                    total_tokens = chunk["usage"].get("completion_tokens", 0)
-
+                                                                                    # industry-standard JSON format for response structure
+                if chunk.get("choices") and len(chunk["choices"]) > 0:              # choices: An array allowing the model to return multiple variations (though n=1 is almost always the default, meaning you just look at index [0]).
+                    delta = chunk["choices"][0].get("delta", {})                    # delta: Only appears in streaming; tracks the incremental token generation.
+                    if delta.get("content") and ttft is None:                       # finish_reason: Tells you why it stopped ("stop" = natural end, "length" = hit max tokens limit).
+                        ttft = time.time() - start_time                             # usage: Essential for billing and benchmarking; tracks input (prompt) vs output (completion) tokens.
+                                                                                    #data chunk --> {"id":"chatcmpl-123","object":"chat.completion.chunk",
+                if "usage" in chunk and chunk["usage"] is not None:                 # "choices":[{"index":0,"delta":{"content":"Hello"},"finish_reason":null}]}
+                    total_tokens = chunk["usage"].get("completion_tokens", 0)       # End chunk --> {"id":"chatcmpl-123","object":"chat.completion.chunk","choices":[{"index":0,"delta":{},
+                                                                                    # "finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":9,"total_tokens":18}}
             end_time = time.time()
             total_duration = end_time - start_time
 
@@ -59,8 +68,8 @@ async def send_request(session, url, model_name, prompt, client_id):
                 total_tokens = 100
 
             decode_duration = total_duration - (ttft if ttft else 0)
-            tokens_per_sec = total_tokens / decode_duration if decode_duration > 0 else 0
-
+            tokens_per_sec = (total_tokens - 1) / decode_duration if decode_duration > 0 else 0     #first token has already been covered in TTFT
+                                                                                                    # and usage ompletion_tokens sends total generated tokens including the first
             print(f"Client {client_id} -> TTFT: {ttft:.3f}s | Decode: {tokens_per_sec:.2f} T/s")
             return {"ttft": ttft, "tokens_per_sec": tokens_per_sec}
         
@@ -105,12 +114,13 @@ async def main():
     print(f"Blasting {len(prompts_suite)} cocurrent requests to engine port {PORT}")
     api_endpoint = f"http://localhost:{PORT}/v1/chat/completions"
 
-    async with aiohttp.ClientSession() as session:
+    connector = aiohttp.TCPConnector(limit=0)
+    async with aiohttp.ClientSession(connector=connector) as session:       #---> prepares data 
         tasks = [
             send_request(session, api_endpoint, MODEL_NAME, prompts_suite[i], client_id=i)
             for i in range(len(prompts_suite))
         ]
-        client_metrics = await asyncio.gather(*tasks)
+        client_metrics = await asyncio.gather(*tasks)         # --> sends all data togather
 
     generation_event.clear()
     monitor_thread.join()

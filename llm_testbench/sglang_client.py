@@ -12,7 +12,7 @@ PORT = 30000
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct-AWQ"
 OUTPUT_FILE = "sglang_res.json"
 
-prompts_suite = ["Short prompt"] * 50
+prompts_suite = ["What do you know about the weather in antarctica?"] * 50
 
 async def send_request(session, url, model_name, prompt, client_id):
     payload = {
