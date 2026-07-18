@@ -17,7 +17,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
 import time
 
-model_name = "Qwen/Qwen2.5-7B-Instruct"
+model_name = "Qwen/Qwen2.5-1.5B-Instruct"
 
 # 2. Force 4-bit quantization to shrink model size to ~5.5GB
 quantization_config = BitsAndBytesConfig(
@@ -28,7 +28,7 @@ quantization_config = BitsAndBytesConfig(
 # 3. Load model completely into GPU VRAM
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    quantization_config=quantization_config,
+    #quantization_config=quantization_config,
     device_map="auto" # This will now map 100% to 'cuda:0'
 )
 
@@ -73,7 +73,7 @@ class TrackStreamer(TextStreamer):
 
         super().put(value)
 
-prompt = "Give me a short introduction to large language model."
+prompt = "Discuss the weather of Antarctica"
 
 """
 prompt =  You are an elite Staff Systems Architect and Lead Operations Analyst. You are being handed a massive corpus of unstructured project documentation, system logs, architectural specifications, and meeting transcripts from AeroNexus Robotics. 
@@ -483,11 +483,29 @@ torch.cuda.synchronize()
 streamer.start_time = time.time()
 torch.cuda.synchronize()
 start_time = time.time()
-model.generate(     
+outputs = model.generate(     
     **model_inputs,              #generate embeddings from token --> output response token??
+    min_new_tokens=100,
     max_new_tokens=100,
+    eos_token_id=None,
     streamer=streamer,
+    return_dict_in_generate=True, # <-- Critical flag
+    output_scores=True
 )
 torch.cuda.synchronize()
 end_time = time.time()
 print("Total exec time >>>", end_time - start_time )
+generated_tokens = outputs.sequences
+
+# 3. If you want the TOTAL count (Input + Output):
+total_token_count = generated_tokens.shape[1]
+
+# 4. If you want ONLY the newly generated output token count:
+input_token_count = model_inputs['input_ids'].shape[1]
+output_token_count = total_token_count - input_token_count
+
+print(f"Output token count: {output_token_count}")
+
+TPS = output_token_count / (end_time - start_time)
+
+print("TPS-->", TPS)
