@@ -159,7 +159,7 @@ def format_for_mistral(example, turns_key="turns", schema_key="schema"):
 
 
 MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
-MAX_SEQ_LEN = 1024
+MAX_SEQ_LEN = 2048
 
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
@@ -188,6 +188,7 @@ print(model.model.layers[0].self_attn.q_proj.weight.dtype)
 model = prepare_model_for_kbit_training(
     model,
     use_gradient_checkpointing=True,
+    gradient_checkpointing_kwargs={"use_reentrant": False},
 )
 
 model.config.use_cache = False
@@ -195,8 +196,8 @@ model.config.use_cache = False
 print(torch.cuda.max_memory_allocated() / (1024**3))
 
 lora_config = LoraConfig(
-    r=8,
-    lora_alpha=16,
+    r=16,
+    lora_alpha=32,
     lora_dropout=0.05,
     bias="none",
     task_type="CAUSAL_LM",
@@ -227,7 +228,7 @@ assert "{% generation %}" in tokenizer.chat_template      # postcondition: edit 
 
 # ---------------------------------------------  Test code for stress test ----------------------------------------------------------#
 
-
+ 
 print(torch.cuda.max_memory_allocated() / (1024**3))
 
 fake_batch =  torch.randint(low=0, high=tokenizer.vocab_size, size=(1,MAX_SEQ_LEN), device="cuda")
@@ -236,10 +237,11 @@ attention_mask = torch.ones_like(fake_batch)
 parameters = [p for p in model.parameters() if p.requires_grad]
 # optimizer = optim.AdamW(parameters, lr=2e-4)
 optimizer = bnb.optim.PagedAdamW8bit(parameters, lr=2e-4)
-
+model.train()                      # ← engage training mode (checkpointing needs this)
+print(model.training)              # → True
+print(model.is_gradient_checkpointing)  # → True  (flag AND mode both required)
 torch.cuda.reset_peak_memory_stats()
 
-print(model.is_gradient_checkpointing)
 
 for step in range(17):
   outputs = model(input_ids=fake_batch, attention_mask=attention_mask,labels=fake_batch)
@@ -289,18 +291,18 @@ trainer = SFTTrainer(
     processing_class=tokenizer,
 )
 
-# trainer = SFTTrainer(
-#     model=model,
-#     args=sft_config,
-#     train_dataset=train_dataset,
-#     eval_dataset=eval_dataset,
-#     processing_class=tokenizer,
-# )
+trainer = SFTTrainer(
+    model=model,
+    args=sft_config,
+    train_dataset=train_dataset,
+    eval_dataset=eval_dataset,
+    processing_class=tokenizer,
+)
 
-# torch.cuda.reset_peak_memory_stats()
-# print(f"before training start: {torch.cuda.max_memory_allocated() / (1024**3):.2f} GB")
-# trainer.train()
-# print(f"After training: {torch.cuda.max_memory_allocated() / (1024**3):.2f} GB")
-# model.save_pretrained("./qlora_output/final_adapter")
-# tokenizer.save_pretrained("./qlora_output/final_adapter")
-# print("Adapter saved. Check size with: du -sh ./qlora_output/final_adapter")
+torch.cuda.reset_peak_memory_stats()
+print(f"before training start: {torch.cuda.max_memory_allocated() / (1024**3):.2f} GB")
+trainer.train()
+print(f"After training: {torch.cuda.max_memory_allocated() / (1024**3):.2f} GB")
+model.save_pretrained("./qlora_output/final_adapter")
+tokenizer.save_pretrained("./qlora_output/final_adapter")
+print("Adapter saved. Check size with: du -sh ./qlora_output_f/final_adapter")

@@ -1,0 +1,4202 @@
+[
+  {
+    "schema": "users(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users.",
+        "a": "SELECT * FROM users;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees.",
+        "a": "SELECT * FROM employees;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products.",
+        "a": "SELECT * FROM products;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders.",
+        "a": "SELECT * FROM orders;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students.",
+        "a": "SELECT * FROM students;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies.",
+        "a": "SELECT * FROM movies;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales.",
+        "a": "SELECT * FROM sales;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books.",
+        "a": "SELECT * FROM books;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients.",
+        "a": "SELECT * FROM patients;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights.",
+        "a": "SELECT * FROM flights;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_2(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_2.",
+        "a": "SELECT * FROM users_2;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_2 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_2 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_2 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_2(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_2.",
+        "a": "SELECT * FROM employees_2;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_2 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_2 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_2 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_2(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_2.",
+        "a": "SELECT * FROM products_2;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_2 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_2 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_2 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_2(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_2.",
+        "a": "SELECT * FROM orders_2;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_2 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_2 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_2 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_2(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_2.",
+        "a": "SELECT * FROM students_2;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_2 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_2 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_2 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_2(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_2.",
+        "a": "SELECT * FROM movies_2;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_2 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_2 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_2 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_2(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_2.",
+        "a": "SELECT * FROM sales_2;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_2 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_2 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_2 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_2(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_2.",
+        "a": "SELECT * FROM books_2;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_2 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_2 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_2 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_2(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_2.",
+        "a": "SELECT * FROM patients_2;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_2 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_2 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_2 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_2(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_2.",
+        "a": "SELECT * FROM flights_2;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_2 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_2 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_2 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_3(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_3.",
+        "a": "SELECT * FROM users_3;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_3 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_3 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_3 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_3(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_3.",
+        "a": "SELECT * FROM employees_3;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_3 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_3 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_3 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_3(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_3.",
+        "a": "SELECT * FROM products_3;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_3 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_3 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_3 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_3(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_3.",
+        "a": "SELECT * FROM orders_3;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_3 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_3 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_3 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_3(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_3.",
+        "a": "SELECT * FROM students_3;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_3 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_3 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_3 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_3(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_3.",
+        "a": "SELECT * FROM movies_3;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_3 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_3 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_3 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_3(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_3.",
+        "a": "SELECT * FROM sales_3;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_3 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_3 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_3 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_3(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_3.",
+        "a": "SELECT * FROM books_3;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_3 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_3 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_3 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_3(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_3.",
+        "a": "SELECT * FROM patients_3;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_3 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_3 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_3 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_3(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_3.",
+        "a": "SELECT * FROM flights_3;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_3 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_3 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_3 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_4(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_4.",
+        "a": "SELECT * FROM users_4;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_4 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_4 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_4 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_4(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_4.",
+        "a": "SELECT * FROM employees_4;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_4 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_4 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_4 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_4(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_4.",
+        "a": "SELECT * FROM products_4;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_4 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_4 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_4 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_4(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_4.",
+        "a": "SELECT * FROM orders_4;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_4 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_4 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_4 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_4(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_4.",
+        "a": "SELECT * FROM students_4;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_4 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_4 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_4 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_4(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_4.",
+        "a": "SELECT * FROM movies_4;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_4 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_4 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_4 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_4(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_4.",
+        "a": "SELECT * FROM sales_4;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_4 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_4 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_4 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_4(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_4.",
+        "a": "SELECT * FROM books_4;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_4 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_4 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_4 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_4(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_4.",
+        "a": "SELECT * FROM patients_4;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_4 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_4 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_4 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_4(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_4.",
+        "a": "SELECT * FROM flights_4;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_4 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_4 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_4 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_5(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_5.",
+        "a": "SELECT * FROM users_5;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_5 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_5 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_5 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_5(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_5.",
+        "a": "SELECT * FROM employees_5;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_5 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_5 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_5 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_5(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_5.",
+        "a": "SELECT * FROM products_5;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_5 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_5 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_5 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_5(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_5.",
+        "a": "SELECT * FROM orders_5;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_5 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_5 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_5 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_5(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_5.",
+        "a": "SELECT * FROM students_5;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_5 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_5 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_5 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_5(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_5.",
+        "a": "SELECT * FROM movies_5;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_5 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_5 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_5 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_5(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_5.",
+        "a": "SELECT * FROM sales_5;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_5 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_5 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_5 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_5(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_5.",
+        "a": "SELECT * FROM books_5;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_5 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_5 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_5 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_5(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_5.",
+        "a": "SELECT * FROM patients_5;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_5 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_5 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_5 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_5(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_5.",
+        "a": "SELECT * FROM flights_5;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_5 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_5 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_5 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_6(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_6.",
+        "a": "SELECT * FROM users_6;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_6 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_6 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_6 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_6(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_6.",
+        "a": "SELECT * FROM employees_6;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_6 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_6 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_6 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_6(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_6.",
+        "a": "SELECT * FROM products_6;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_6 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_6 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_6 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_6(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_6.",
+        "a": "SELECT * FROM orders_6;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_6 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_6 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_6 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_6(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_6.",
+        "a": "SELECT * FROM students_6;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_6 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_6 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_6 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_6(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_6.",
+        "a": "SELECT * FROM movies_6;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_6 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_6 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_6 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_6(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_6.",
+        "a": "SELECT * FROM sales_6;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_6 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_6 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_6 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_6(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_6.",
+        "a": "SELECT * FROM books_6;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_6 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_6 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_6 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_6(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_6.",
+        "a": "SELECT * FROM patients_6;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_6 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_6 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_6 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_6(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_6.",
+        "a": "SELECT * FROM flights_6;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_6 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_6 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_6 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_7(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_7.",
+        "a": "SELECT * FROM users_7;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_7 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_7 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_7 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_7(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_7.",
+        "a": "SELECT * FROM employees_7;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_7 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_7 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_7 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_7(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_7.",
+        "a": "SELECT * FROM products_7;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_7 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_7 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_7 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_7(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_7.",
+        "a": "SELECT * FROM orders_7;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_7 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_7 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_7 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_7(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_7.",
+        "a": "SELECT * FROM students_7;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_7 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_7 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_7 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_7(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_7.",
+        "a": "SELECT * FROM movies_7;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_7 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_7 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_7 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_7(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_7.",
+        "a": "SELECT * FROM sales_7;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_7 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_7 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_7 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_7(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_7.",
+        "a": "SELECT * FROM books_7;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_7 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_7 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_7 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_7(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_7.",
+        "a": "SELECT * FROM patients_7;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_7 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_7 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_7 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_7(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_7.",
+        "a": "SELECT * FROM flights_7;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_7 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_7 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_7 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_8(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_8.",
+        "a": "SELECT * FROM users_8;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_8 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_8 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_8 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_8(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_8.",
+        "a": "SELECT * FROM employees_8;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_8 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_8 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_8 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_8(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_8.",
+        "a": "SELECT * FROM products_8;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_8 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_8 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_8 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_8(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_8.",
+        "a": "SELECT * FROM orders_8;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_8 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_8 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_8 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_8(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_8.",
+        "a": "SELECT * FROM students_8;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_8 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_8 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_8 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_8(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_8.",
+        "a": "SELECT * FROM movies_8;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_8 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_8 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_8 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_8(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_8.",
+        "a": "SELECT * FROM sales_8;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_8 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_8 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_8 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_8(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_8.",
+        "a": "SELECT * FROM books_8;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_8 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_8 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_8 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_8(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_8.",
+        "a": "SELECT * FROM patients_8;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_8 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_8 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_8 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_8(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_8.",
+        "a": "SELECT * FROM flights_8;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_8 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_8 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_8 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_9(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_9.",
+        "a": "SELECT * FROM users_9;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_9 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_9 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_9 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_9(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_9.",
+        "a": "SELECT * FROM employees_9;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_9 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_9 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_9 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_9(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_9.",
+        "a": "SELECT * FROM products_9;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_9 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_9 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_9 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_9(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_9.",
+        "a": "SELECT * FROM orders_9;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_9 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_9 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_9 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_9(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_9.",
+        "a": "SELECT * FROM students_9;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_9 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_9 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_9 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_9(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_9.",
+        "a": "SELECT * FROM movies_9;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_9 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_9 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_9 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_9(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_9.",
+        "a": "SELECT * FROM sales_9;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_9 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_9 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_9 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_9(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_9.",
+        "a": "SELECT * FROM books_9;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_9 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_9 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_9 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_9(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_9.",
+        "a": "SELECT * FROM patients_9;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_9 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_9 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_9 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_9(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_9.",
+        "a": "SELECT * FROM flights_9;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_9 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_9 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_9 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_10(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_10.",
+        "a": "SELECT * FROM users_10;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_10 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_10 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_10 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_10(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_10.",
+        "a": "SELECT * FROM employees_10;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_10 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_10 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_10 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_10(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_10.",
+        "a": "SELECT * FROM products_10;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_10 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_10 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_10 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_10(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_10.",
+        "a": "SELECT * FROM orders_10;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_10 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_10 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_10 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_10(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_10.",
+        "a": "SELECT * FROM students_10;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_10 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_10 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_10 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_10(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_10.",
+        "a": "SELECT * FROM movies_10;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_10 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_10 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_10 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_10(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_10.",
+        "a": "SELECT * FROM sales_10;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_10 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_10 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_10 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_10(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_10.",
+        "a": "SELECT * FROM books_10;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_10 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_10 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_10 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_10(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_10.",
+        "a": "SELECT * FROM patients_10;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_10 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_10 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_10 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_10(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_10.",
+        "a": "SELECT * FROM flights_10;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_10 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_10 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_10 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_11(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_11.",
+        "a": "SELECT * FROM users_11;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_11 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_11 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_11 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_11(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_11.",
+        "a": "SELECT * FROM employees_11;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_11 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_11 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_11 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_11(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_11.",
+        "a": "SELECT * FROM products_11;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_11 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_11 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_11 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_11(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_11.",
+        "a": "SELECT * FROM orders_11;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_11 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_11 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_11 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_11(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_11.",
+        "a": "SELECT * FROM students_11;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_11 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_11 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_11 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_11(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_11.",
+        "a": "SELECT * FROM movies_11;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_11 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_11 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_11 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_11(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_11.",
+        "a": "SELECT * FROM sales_11;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_11 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_11 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_11 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_11(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_11.",
+        "a": "SELECT * FROM books_11;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_11 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_11 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_11 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_11(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_11.",
+        "a": "SELECT * FROM patients_11;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_11 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_11 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_11 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_11(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_11.",
+        "a": "SELECT * FROM flights_11;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_11 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_11 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_11 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_12(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_12.",
+        "a": "SELECT * FROM users_12;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_12 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_12 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_12 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_12(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_12.",
+        "a": "SELECT * FROM employees_12;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_12 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_12 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_12 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_12(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_12.",
+        "a": "SELECT * FROM products_12;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_12 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_12 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_12 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_12(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_12.",
+        "a": "SELECT * FROM orders_12;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_12 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_12 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_12 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_12(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_12.",
+        "a": "SELECT * FROM students_12;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_12 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_12 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_12 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_12(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_12.",
+        "a": "SELECT * FROM movies_12;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_12 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_12 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_12 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_12(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_12.",
+        "a": "SELECT * FROM sales_12;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_12 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_12 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_12 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_12(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_12.",
+        "a": "SELECT * FROM books_12;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_12 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_12 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_12 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_12(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_12.",
+        "a": "SELECT * FROM patients_12;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_12 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_12 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_12 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_12(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_12.",
+        "a": "SELECT * FROM flights_12;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_12 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_12 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_12 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_13(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_13.",
+        "a": "SELECT * FROM users_13;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_13 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_13 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_13 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_13(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_13.",
+        "a": "SELECT * FROM employees_13;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_13 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_13 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_13 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_13(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_13.",
+        "a": "SELECT * FROM products_13;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_13 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_13 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_13 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_13(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_13.",
+        "a": "SELECT * FROM orders_13;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_13 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_13 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_13 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_13(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_13.",
+        "a": "SELECT * FROM students_13;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_13 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_13 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_13 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_13(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_13.",
+        "a": "SELECT * FROM movies_13;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_13 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_13 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_13 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_13(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_13.",
+        "a": "SELECT * FROM sales_13;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_13 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_13 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_13 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_13(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_13.",
+        "a": "SELECT * FROM books_13;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_13 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_13 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_13 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_13(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_13.",
+        "a": "SELECT * FROM patients_13;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_13 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_13 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_13 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_13(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_13.",
+        "a": "SELECT * FROM flights_13;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_13 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_13 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_13 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_14(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_14.",
+        "a": "SELECT * FROM users_14;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_14 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_14 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_14 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_14(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_14.",
+        "a": "SELECT * FROM employees_14;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_14 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_14 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_14 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_14(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_14.",
+        "a": "SELECT * FROM products_14;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_14 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_14 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_14 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_14(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_14.",
+        "a": "SELECT * FROM orders_14;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_14 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_14 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_14 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_14(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_14.",
+        "a": "SELECT * FROM students_14;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_14 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_14 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_14 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_14(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_14.",
+        "a": "SELECT * FROM movies_14;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_14 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_14 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_14 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_14(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_14.",
+        "a": "SELECT * FROM sales_14;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_14 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_14 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_14 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_14(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_14.",
+        "a": "SELECT * FROM books_14;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_14 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_14 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_14 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_14(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_14.",
+        "a": "SELECT * FROM patients_14;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_14 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_14 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_14 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_14(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_14.",
+        "a": "SELECT * FROM flights_14;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_14 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_14 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_14 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_15(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_15.",
+        "a": "SELECT * FROM users_15;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_15 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_15 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_15 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_15(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_15.",
+        "a": "SELECT * FROM employees_15;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_15 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_15 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_15 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_15(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_15.",
+        "a": "SELECT * FROM products_15;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_15 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_15 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_15 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_15(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_15.",
+        "a": "SELECT * FROM orders_15;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_15 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_15 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_15 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_15(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_15.",
+        "a": "SELECT * FROM students_15;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_15 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_15 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_15 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_15(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_15.",
+        "a": "SELECT * FROM movies_15;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_15 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_15 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_15 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_15(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_15.",
+        "a": "SELECT * FROM sales_15;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_15 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_15 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_15 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_15(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_15.",
+        "a": "SELECT * FROM books_15;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_15 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_15 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_15 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_15(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_15.",
+        "a": "SELECT * FROM patients_15;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_15 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_15 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_15 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_15(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_15.",
+        "a": "SELECT * FROM flights_15;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_15 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_15 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_15 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_16(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_16.",
+        "a": "SELECT * FROM users_16;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_16 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_16 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_16 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_16(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_16.",
+        "a": "SELECT * FROM employees_16;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_16 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_16 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_16 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_16(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_16.",
+        "a": "SELECT * FROM products_16;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_16 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_16 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_16 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_16(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_16.",
+        "a": "SELECT * FROM orders_16;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_16 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_16 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_16 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_16(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_16.",
+        "a": "SELECT * FROM students_16;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_16 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_16 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_16 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_16(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_16.",
+        "a": "SELECT * FROM movies_16;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_16 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_16 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_16 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_16(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_16.",
+        "a": "SELECT * FROM sales_16;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_16 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_16 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_16 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_16(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_16.",
+        "a": "SELECT * FROM books_16;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_16 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_16 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_16 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_16(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_16.",
+        "a": "SELECT * FROM patients_16;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_16 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_16 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_16 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_16(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_16.",
+        "a": "SELECT * FROM flights_16;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_16 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_16 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_16 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_17(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_17.",
+        "a": "SELECT * FROM users_17;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_17 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_17 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_17 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_17(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_17.",
+        "a": "SELECT * FROM employees_17;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_17 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_17 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_17 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_17(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_17.",
+        "a": "SELECT * FROM products_17;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_17 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_17 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_17 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_17(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_17.",
+        "a": "SELECT * FROM orders_17;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_17 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_17 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_17 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_17(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_17.",
+        "a": "SELECT * FROM students_17;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_17 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_17 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_17 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_17(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_17.",
+        "a": "SELECT * FROM movies_17;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_17 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_17 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_17 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_17(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_17.",
+        "a": "SELECT * FROM sales_17;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_17 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_17 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_17 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_17(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_17.",
+        "a": "SELECT * FROM books_17;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_17 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_17 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_17 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_17(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_17.",
+        "a": "SELECT * FROM patients_17;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_17 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_17 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_17 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_17(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_17.",
+        "a": "SELECT * FROM flights_17;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_17 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_17 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_17 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_18(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_18.",
+        "a": "SELECT * FROM users_18;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_18 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_18 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_18 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_18(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_18.",
+        "a": "SELECT * FROM employees_18;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_18 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_18 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_18 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_18(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_18.",
+        "a": "SELECT * FROM products_18;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_18 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_18 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_18 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_18(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_18.",
+        "a": "SELECT * FROM orders_18;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_18 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_18 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_18 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_18(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_18.",
+        "a": "SELECT * FROM students_18;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_18 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_18 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_18 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_18(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_18.",
+        "a": "SELECT * FROM movies_18;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_18 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_18 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_18 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_18(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_18.",
+        "a": "SELECT * FROM sales_18;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_18 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_18 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_18 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_18(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_18.",
+        "a": "SELECT * FROM books_18;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_18 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_18 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_18 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_18(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_18.",
+        "a": "SELECT * FROM patients_18;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_18 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_18 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_18 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_18(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_18.",
+        "a": "SELECT * FROM flights_18;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_18 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_18 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_18 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_19(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_19.",
+        "a": "SELECT * FROM users_19;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_19 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_19 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_19 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_19(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_19.",
+        "a": "SELECT * FROM employees_19;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_19 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_19 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_19 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_19(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_19.",
+        "a": "SELECT * FROM products_19;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_19 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_19 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_19 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_19(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_19.",
+        "a": "SELECT * FROM orders_19;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_19 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_19 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_19 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_19(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_19.",
+        "a": "SELECT * FROM students_19;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_19 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_19 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_19 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_19(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_19.",
+        "a": "SELECT * FROM movies_19;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_19 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_19 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_19 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_19(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_19.",
+        "a": "SELECT * FROM sales_19;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_19 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_19 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_19 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_19(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_19.",
+        "a": "SELECT * FROM books_19;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_19 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_19 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_19 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_19(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_19.",
+        "a": "SELECT * FROM patients_19;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_19 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_19 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_19 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_19(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_19.",
+        "a": "SELECT * FROM flights_19;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_19 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_19 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_19 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  },
+  {
+    "schema": "users_20(id, name, signup_year, country, age)",
+    "turns": [
+      {
+        "q": "Show all records from users_20.",
+        "a": "SELECT * FROM users_20;"
+      },
+      {
+        "q": "Only where country is 'USA'.",
+        "a": "SELECT * FROM users_20 WHERE country = 'USA';"
+      },
+      {
+        "q": "Filter further by age > 21.",
+        "a": "SELECT * FROM users_20 WHERE country = 'USA' AND age > 21;"
+      },
+      {
+        "q": "And also signup_year > 2020.",
+        "a": "SELECT * FROM users_20 WHERE country = 'USA' AND age > 21 AND signup_year > 2020;"
+      }
+    ]
+  },
+  {
+    "schema": "employees_20(id, name, department, salary, hire_year)",
+    "turns": [
+      {
+        "q": "Show all records from employees_20.",
+        "a": "SELECT * FROM employees_20;"
+      },
+      {
+        "q": "Only where department is 'Engineering'.",
+        "a": "SELECT * FROM employees_20 WHERE department = 'Engineering';"
+      },
+      {
+        "q": "Filter further by salary > 80000.",
+        "a": "SELECT * FROM employees_20 WHERE department = 'Engineering' AND salary > 80000;"
+      },
+      {
+        "q": "And also hire_year = 2022.",
+        "a": "SELECT * FROM employees_20 WHERE department = 'Engineering' AND salary > 80000 AND hire_year = 2022;"
+      }
+    ]
+  },
+  {
+    "schema": "products_20(id, name, category, price, stock)",
+    "turns": [
+      {
+        "q": "Show all records from products_20.",
+        "a": "SELECT * FROM products_20;"
+      },
+      {
+        "q": "Only where category is 'Electronics'.",
+        "a": "SELECT * FROM products_20 WHERE category = 'Electronics';"
+      },
+      {
+        "q": "Filter further by price < 500.",
+        "a": "SELECT * FROM products_20 WHERE category = 'Electronics' AND price < 500;"
+      },
+      {
+        "q": "And also stock > 0.",
+        "a": "SELECT * FROM products_20 WHERE category = 'Electronics' AND price < 500 AND stock > 0;"
+      }
+    ]
+  },
+  {
+    "schema": "orders_20(order_id, customer_id, order_date, amount, status)",
+    "turns": [
+      {
+        "q": "Show all records from orders_20.",
+        "a": "SELECT * FROM orders_20;"
+      },
+      {
+        "q": "Only where status is 'Completed'.",
+        "a": "SELECT * FROM orders_20 WHERE status = 'Completed';"
+      },
+      {
+        "q": "Filter further by amount > 100.",
+        "a": "SELECT * FROM orders_20 WHERE status = 'Completed' AND amount > 100;"
+      },
+      {
+        "q": "And also YEAR(order_date) = 2024.",
+        "a": "SELECT * FROM orders_20 WHERE status = 'Completed' AND amount > 100 AND YEAR(order_date) = 2024;"
+      }
+    ]
+  },
+  {
+    "schema": "students_20(id, name, major, gpa, graduation_year)",
+    "turns": [
+      {
+        "q": "Show all records from students_20.",
+        "a": "SELECT * FROM students_20;"
+      },
+      {
+        "q": "Only where major is 'Computer Science'.",
+        "a": "SELECT * FROM students_20 WHERE major = 'Computer Science';"
+      },
+      {
+        "q": "Filter further by gpa > 3.5.",
+        "a": "SELECT * FROM students_20 WHERE major = 'Computer Science' AND gpa > 3.5;"
+      },
+      {
+        "q": "And also graduation_year = 2025.",
+        "a": "SELECT * FROM students_20 WHERE major = 'Computer Science' AND gpa > 3.5 AND graduation_year = 2025;"
+      }
+    ]
+  },
+  {
+    "schema": "movies_20(id, title, genre, rating, release_year)",
+    "turns": [
+      {
+        "q": "Show all records from movies_20.",
+        "a": "SELECT * FROM movies_20;"
+      },
+      {
+        "q": "Only where genre is 'Action'.",
+        "a": "SELECT * FROM movies_20 WHERE genre = 'Action';"
+      },
+      {
+        "q": "Filter further by rating > 8.0.",
+        "a": "SELECT * FROM movies_20 WHERE genre = 'Action' AND rating > 8.0;"
+      },
+      {
+        "q": "And also release_year > 2015.",
+        "a": "SELECT * FROM movies_20 WHERE genre = 'Action' AND rating > 8.0 AND release_year > 2015;"
+      }
+    ]
+  },
+  {
+    "schema": "sales_20(id, region, year, revenue, units_sold)",
+    "turns": [
+      {
+        "q": "Show all records from sales_20.",
+        "a": "SELECT * FROM sales_20;"
+      },
+      {
+        "q": "Only where region is 'North'.",
+        "a": "SELECT * FROM sales_20 WHERE region = 'North';"
+      },
+      {
+        "q": "Filter further by year = 2023.",
+        "a": "SELECT * FROM sales_20 WHERE region = 'North' AND year = 2023;"
+      },
+      {
+        "q": "And also units_sold > 500.",
+        "a": "SELECT * FROM sales_20 WHERE region = 'North' AND year = 2023 AND units_sold > 500;"
+      }
+    ]
+  },
+  {
+    "schema": "books_20(id, title, author, genre, price)",
+    "turns": [
+      {
+        "q": "Show all records from books_20.",
+        "a": "SELECT * FROM books_20;"
+      },
+      {
+        "q": "Only where genre is 'Fiction'.",
+        "a": "SELECT * FROM books_20 WHERE genre = 'Fiction';"
+      },
+      {
+        "q": "Filter further by price < 20.",
+        "a": "SELECT * FROM books_20 WHERE genre = 'Fiction' AND price < 20;"
+      },
+      {
+        "q": "And also author = 'King'.",
+        "a": "SELECT * FROM books_20 WHERE genre = 'Fiction' AND price < 20 AND author = 'King';"
+      }
+    ]
+  },
+  {
+    "schema": "patients_20(id, name, age, gender, admitted_year)",
+    "turns": [
+      {
+        "q": "Show all records from patients_20.",
+        "a": "SELECT * FROM patients_20;"
+      },
+      {
+        "q": "Only where gender is 'F'.",
+        "a": "SELECT * FROM patients_20 WHERE gender = 'F';"
+      },
+      {
+        "q": "Filter further by age > 65.",
+        "a": "SELECT * FROM patients_20 WHERE gender = 'F' AND age > 65;"
+      },
+      {
+        "q": "And also admitted_year = 2023.",
+        "a": "SELECT * FROM patients_20 WHERE gender = 'F' AND age > 65 AND admitted_year = 2023;"
+      }
+    ]
+  },
+  {
+    "schema": "flights_20(flight_id, airline, origin, destination, price)",
+    "turns": [
+      {
+        "q": "Show all records from flights_20.",
+        "a": "SELECT * FROM flights_20;"
+      },
+      {
+        "q": "Only where airline is 'Delta'.",
+        "a": "SELECT * FROM flights_20 WHERE airline = 'Delta';"
+      },
+      {
+        "q": "Filter further by destination = 'JFK'.",
+        "a": "SELECT * FROM flights_20 WHERE airline = 'Delta' AND destination = 'JFK';"
+      },
+      {
+        "q": "And also price < 400.",
+        "a": "SELECT * FROM flights_20 WHERE airline = 'Delta' AND destination = 'JFK' AND price < 400;"
+      }
+    ]
+  }
+]

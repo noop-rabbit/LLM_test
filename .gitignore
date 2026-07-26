@@ -11,3 +11,6 @@ __pycache__/
 
 # Optional: Ensure git never picks up hidden system trash
 .DS_Store
+qlora_output/
+code_test_1.ipynb
+test.py
