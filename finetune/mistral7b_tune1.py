@@ -172,7 +172,10 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 print(tokenizer.special_tokens_map)
 
 if tokenizer.pad_token is None:
-    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.pad_token = tokenizer.unk_token
+    tokenizer.pad_token_id = tokenizer.unk_token_id
+
+tokenizer.padding_side = "right"
 
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
@@ -181,6 +184,8 @@ model = AutoModelForCausalLM.from_pretrained(
     torch_dtype=torch.bfloat16,
     attn_implementation="sdpa",
 )
+
+model.config.pad_token_id = tokenizer.pad_token_id
 
 print("----->",model.get_memory_footprint() / (1024**3))
 print(model.model.layers[0].self_attn.q_proj.weight.dtype)
@@ -291,13 +296,6 @@ trainer = SFTTrainer(
     processing_class=tokenizer,
 )
 
-trainer = SFTTrainer(
-    model=model,
-    args=sft_config,
-    train_dataset=train_dataset,
-    eval_dataset=eval_dataset,
-    processing_class=tokenizer,
-)
 
 torch.cuda.reset_peak_memory_stats()
 print(f"before training start: {torch.cuda.max_memory_allocated() / (1024**3):.2f} GB")
