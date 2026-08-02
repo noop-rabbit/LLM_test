@@ -1,4 +1,4 @@
-import torch
+import torch, sys
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel
 
@@ -68,3 +68,6 @@ new_tokens= outputs[0][inputs["input_ids"].shape[-1]:]
 response = tokenizer.decode(new_tokens, skip_special_tokens=True)
 
 print(response)
+
+print("Executable Path:", sys.executable)
+print("CUDA Available:", torch.cuda.is_available()) # or tf.config.list_physical_devices('GPU')

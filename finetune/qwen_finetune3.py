@@ -6,12 +6,18 @@ import subprocess
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from trl import SFTTrainer, SFTConfig
-from datasets import Dataset
+
+from datasets import load_dataset
 import torch.optim as optim
 import bitsandbytes as bnb
 import json
 from datasets import load_dataset
 import string
+from collections import Counter
+
+
+random.seed(42) 
+MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 
 def generate_invoice_truth():
 
@@ -89,8 +95,8 @@ def render_invoice_text(invoice, missing: list = [], unlabeled: list = [], label
   return text
 
 invoice = generate_invoice_truth()
-print(render_invoice_text(invoice, unlabeled=["subtotal"], labels={"tax": "x7Q"}))
-print(render_invoice_text(invoice, missing=["total"], labels={"invoice_number": "Ref No"})) 
+# print(render_invoice_text(invoice, unlabeled=["subtotal"], labels={"tax": "x7Q"}))
+
 
 def label_formatter(labels=None):
    labels = labels or []
@@ -175,6 +181,83 @@ def case_dest(labels_c: str = "", let_num: int = 0) -> str:
 # print(label_formatter(["Tax", "Invoice Number"]))
 # print(label_changer(["Tax", "Invoice Number"], [1, 3]))
 
+def build_target(invoice, hidden: list = []):
+  target = {
+      "vendor_name":    invoice.get("vendor_name")    if "vendor_name"    not in hidden else None,
+      "invoice_number": invoice.get("invoice_number") if "invoice_number" not in hidden else None,
+      "invoice_date":   date.fromisoformat(invoice["invoice_date"]).strftime("%B %d, %Y")
+                        if "invoice_date" not in hidden else None,
+      "due_date":       date.fromisoformat(invoice["due_date"]).strftime("%B %d, %Y")
+                        if "due_date" not in hidden else None,
+      "currency":       invoice.get("currency")       if "currency"       not in hidden else None,
+      "subtotal":       invoice.get("subtotal")       if "subtotal"       not in hidden else None,
+      "tax":            invoice.get("tax")            if "tax"            not in hidden else None,
+      "total":          invoice.get("total")          if "total"          not in hidden else None,
+  }
+  return target
+
+# print(build_target(invoice, ["invoice_date", "subtotal"]))
+# print(invoice)
+
+def make_example(case):
+  invoice = generate_invoice_truth()
+
+  missing, unlabeled, labels = [], [], {}
+  field = random.choice(FIELDS)
+  hidden = []
+
+  if case == "clean":
+    pass
+
+  elif case == "missing_value":
+    if random.random() < 0.15:
+      missing = ["vendor_name"]
+      hidden = ["vendor_name"]
+    else:
+      missing = [field]
+      hidden = [field]
+
+  elif case == "label_format_variation":
+    labels = {field: random.choice(ALIASES[field])}
+
+  elif case == "accepted_corrupted_label":
+    corrupted = label_changer([LABELS[field]], [1])[0]
+    while corrupted.lower() in VALID_LOWER:
+      corrupted = label_changer([LABELS[field]], [1])[0]
+    labels = {field: corrupted}
+
+  elif case == "rejected_corrupted_or_unlabeled":
+    if random.random() < 0.3:
+      unlabeled = [field]
+    else:
+      corrupted = label_changer([LABELS[field]], [3])[0]
+      while corrupted.lower() in VALID_LOWER:
+        corrupted = label_changer([LABELS[field]], [3])[0]
+      labels = {field: corrupted}
+    hidden = [field]
+
+  text = render_invoice_text(invoice, missing, unlabeled, labels)
+  target = build_target(invoice, hidden)
+
+  return {"case": case, "text": text, "target": target}
+
+def to_chat_example(example):
+    return {
+        "prompt": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user",   "content": example["text"]},
+        ],
+        "completion": [
+            {"role": "assistant", "content": json.dumps(example["target"], indent=2)},
+        ],
+    }
+
+
+
+
+
+
+FIELDS = ["invoice_number", "invoice_date", "due_date", "subtotal", "tax", "total"]
 ALIASES = {
     "invoice_number": ["Invoice No", "Inv No", "Reference", "Ref No",
                        "Invoice No.", "Inv No.", "Ref No."],
@@ -186,3 +269,132 @@ ALIASES = {
     "total":          ["Total Due", "Amount Due", "Grand Total", "Balance Due",
                        "Amount After Tax"],
 }
+
+LABELS = {
+    "invoice_number": "Invoice Number",
+    "invoice_date":   "Invoice Date",
+    "due_date":       "Due Date",
+    "subtotal":       "Subtotal",
+    "tax":            "Tax",
+    "total":          "Total",
+}
+
+case_dictionary = {
+  "clean" : 750,
+  "rejected_corrupted_or_unlabeled" : 200,
+  "accepted_corrupted_label" : 150,
+  "missing_value" : 150,
+  "label_format_variation" : 200,
+}
+
+SYSTEM_PROMPT = """You are an invoice extraction system. Extract invoice fields from the provided text.
+Return strict JSON only using the required schema.
+Do not include Markdown, explanations, or extra text. Use null for missing values."""
+
+VALID_LABELS = set(LABELS.values()) | {a for v in ALIASES.values() for a in v}
+VALID_LOWER  = {v.lower() for v in VALID_LABELS}
+
+train_dataset = []
+val_dataset = []
+
+for key, value in case_dictionary.items():
+    for itr in range(value):
+      if itr < int(0.9 * value):
+        train_dataset.append(make_example(key))
+      else:
+        val_dataset.append(make_example(key))
+
+
+random.shuffle(train_dataset)
+random.shuffle(val_dataset)
+
+train_chat = [to_chat_example(e) for e in train_dataset]
+val_chat   = [to_chat_example(e) for e in val_dataset]
+
+with open("invoice_train.jsonl", "w", encoding="utf-8") as f:
+    for ex in train_chat:
+        f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+
+with open("invoice_val.jsonl", "w", encoding="utf-8") as f:
+    for ex in val_chat:
+        f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+
+ds = load_dataset("json", data_files={"train": "invoice_train.jsonl",
+                                      "validation": "invoice_val.jsonl"})
+print(ds)                          # 1305 / 145
+print(ds["train"][0]["messages"]) 
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True,
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_NAME,
+    quantization_config=bnb_config,
+    device_map={"":0},
+    torch_dtype=torch.bfloat16,
+    attn_implementation="sdpa",
+)
+
+model = prepare_model_for_kbit_training(
+    model,
+    use_gradient_checkpointing=True,
+    gradient_checkpointing_kwargs={"use_reentrant": False},
+    )
+
+model.config.use_cache = False
+
+print(torch.cuda.max_memory_allocated() / (1024**3))
+
+lora_config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    lora_dropout=0.05,
+    bias="none",
+    task_type="CAUSAL_LM",
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
+                    "gate_proj","up_proj", "down_proj",
+                    ],
+)
+
+model = get_peft_model(model, lora_config)
+model.print_trainable_parameters()
+
+
+
+sft_config = SFTConfig(
+    output_dir="invoice-extractor",
+    num_train_epochs=3,
+    per_device_train_batch_size=1,
+    gradient_accumulation_steps=16,
+    per_device_eval_batch_size=2,
+    learning_rate=2e-4,
+    logging_steps=10,
+    eval_strategy="steps",
+    eval_steps=50,
+    save_strategy="epoch",
+    bf16=True,
+    max_length=1024,
+    completion_only_loss=True,      # explicit, though it defaults to True for prompt/completion data
+)
+
+trainer = SFTTrainer(
+    model=model,
+    args=sft_config,
+    train_dataset=ds["train"],
+    eval_dataset=ds["validation"],
+    processing_class=tokenizer,
+)
+
+
+batch = next(iter(trainer.get_train_dataloader()))
+labels = batch["labels"][0]
+print(labels[:50])        # should be all -100
+print((labels != -100).sum()) 
+
+trainer.train()
